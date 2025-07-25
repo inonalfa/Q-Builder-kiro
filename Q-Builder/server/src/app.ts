@@ -8,9 +8,10 @@ import { logger } from './utils/logger';
 import authRoutes from './routes/auth';
 import professionRoutes from './routes/professions';
 import catalogRoutes from './routes/catalog';
-// import clientRoutes from './routes/clients';
-// import quoteRoutes from './routes/quotes';
-// import projectRoutes from './routes/projects';
+import clientRoutes from './routes/clients';
+import quoteRoutes from './routes/quotes';
+import projectRoutes from './routes/projects';
+import paymentRoutes from './routes/payments';
 
 const app = express();
 
@@ -49,9 +50,10 @@ app.get('/health', (_req, res) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/professions', professionRoutes);
 app.use('/api/v1/catalog', catalogRoutes);
-// app.use('/api/v1/clients', clientRoutes);
-// app.use('/api/v1/quotes', quoteRoutes);
-// app.use('/api/v1/projects', projectRoutes);
+app.use('/api/v1/clients', clientRoutes);
+app.use('/api/v1/quotes', quoteRoutes);
+app.use('/api/v1/projects', projectRoutes);
+app.use('/api/v1/payments', paymentRoutes);
 
 // 404 handler
 app.use(notFoundHandler);

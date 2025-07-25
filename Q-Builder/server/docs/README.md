@@ -27,31 +27,31 @@ This directory contains comprehensive API documentation for the Q-Builder backen
 - Pricing and unit management
 - Search and filtering capabilities
 
-### 👥 Client Management (Coming Soon)
+### 👥 Client Management ✅
 - Client CRUD operations
 - Contact information management
 - Client search and filtering
 - Client history tracking
 
-### 💰 Quote Management (Coming Soon)
+### 💰 Quote Management ✅
 - Quote creation and management
 - Line item management with catalog integration
 - Quote status tracking (draft, sent, accepted, rejected, expired)
 - Automatic numbering system (Q-YYYY-NNNN)
-- PDF generation with Hebrew support
+- PDF generation with Hebrew support (in progress)
 
-### 🏗️ Project Management (Coming Soon)
+### 🏗️ Project Management ✅
 - Project lifecycle management
 - Automatic project creation from accepted quotes
 - Project status tracking
 - Project numbering system (P-YYYY-NNNN)
 - Integration with payment tracking
 
-### 💳 Payment Management (Coming Soon)
+### 💳 Payment Management ✅
 - Payment tracking and history
 - Multiple payment method support
 - Automatic balance calculations
-- Payment reminders and notifications
+- Payment reminders and notifications (in progress)
 - VAT calculations (18% default)
 
 ### 📄 PDF Generation (Coming Soon)
