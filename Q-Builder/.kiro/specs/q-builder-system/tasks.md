@@ -81,7 +81,8 @@
     - Create Microsoft OAuth token exchange and user info retrieval
     - _Requirements: 9.1, 9.2_
 
-  - [ ] 3.4 Complete OAuth route integration
+  - [x] 3.4 Complete OAuth route integration
+
 
 
 
@@ -170,29 +171,30 @@
 
 - [ ] 6. Implement PDF generation system
   - [ ] 6.1 Set up Hebrew PDF generation infrastructure
-    - Configure PDFKit with Hebrew font support (Noto Sans Hebrew)
-    - Implement RTL text rendering and alignment
-    - Create PDF template structure matching reference design
+    - Install and configure Hebrew fonts (Noto Sans Hebrew) for PDFKit
+    - Create PDF service class with RTL text rendering utilities
+    - Implement PDF template base structure with proper Hebrew layout
+    - Add PDF generation route to quotes controller
     - _Requirements: 1.5, 7.2, 7.4_
 
-  - [ ] 6.2 Build quote PDF generation
-    - Implement business logo integration in PDF header
-    - Create client information block with RTL alignment
-    - Build items table with Hebrew headers and proper formatting
-    - Add totals section with VAT calculations
-    - Include terms and signature areas
+  - [ ] 6.2 Build quote PDF generation functionality
+    - Implement business logo integration in PDF header section
+    - Create client information block with RTL alignment and Hebrew formatting
+    - Build items table with Hebrew headers, RTL alignment, and proper spacing
+    - Add totals section with VAT calculations (subtotal, VAT 18%, total)
+    - Include terms and conditions section with Hebrew text support
+    - Add signature area and footer with business contact information
     - _Requirements: 1.5, 5.4, 7.2_
 
-  - [ ] 6.3 Create PDF download endpoint
-    - Implement secure PDF generation endpoint
-    - Add PDF caching for performance optimization
-    - Create proper file naming and download headers
+  - [ ] 6.3 Create PDF download and caching system
+    - Implement secure PDF generation endpoint with authentication
+    - Add PDF file caching mechanism for performance optimization
+    - Create proper HTTP headers for PDF download (filename, content-type)
+    - Add error handling for PDF generation failures
     - _Requirements: 1.5_
 
 - [ ] 7. Build frontend authentication and layout
   - [x] 7.1 Create authentication pages and components
-
-
     - Build login page with email/password and OAuth options
     - Create registration page with business profile setup
     - Implement password reset functionality
@@ -200,17 +202,13 @@
     - _Requirements: 9.1, 9.2_
 
   - [x] 7.2 Implement main application layout
-
-
     - Create responsive header with navigation and user menu
     - Build RTL-compatible sidebar navigation
     - Implement mobile-friendly navigation with hamburger menu
     - Add Hebrew language support throughout the interface
     - _Requirements: 7.1, 7.3, 7.5, 8.1, 8.4_
 
-
   - [x] 7.3 Set up global state management
-
 
     - Configure Zustand stores for authentication state
     - Implement API service layer with error handling
@@ -218,11 +216,21 @@
     - Create notification system for user feedback
     - _Requirements: 9.3, 9.4_
 
+  - [ ] 7.4 Implement frontend routing and navigation
+    - Set up React Router with protected routes for authenticated users
+    - Create route guards for authentication and authorization
+    - Implement proper navigation between dashboard, quotes, projects, clients
+    - Add breadcrumb navigation and page titles
+    - Connect existing layout components to routing system
+    - Update App.tsx to use proper routing instead of design example
+    - _Requirements: 8.1, 9.3_
+
 - [ ] 8. Build client management interface
   - [ ] 8.1 Create client list and search interface
     - Build responsive client list with search and filtering
     - Implement client cards with contact information display
     - Add sorting capabilities by name, creation date
+    - Create client list page component with proper routing
     - _Requirements: 2.2, 2.5_
 
   - [ ] 8.2 Implement client form components
