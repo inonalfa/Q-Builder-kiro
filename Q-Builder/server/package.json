@@ -19,7 +19,10 @@
     "db:clients": "npx tsx src/utils/db-viewer.ts clients",
     "db:quotes": "npx tsx src/utils/db-viewer.ts quotes",
     "db:projects": "npx tsx src/utils/db-viewer.ts projects",
-    "db:payments": "npx tsx src/utils/db-viewer.ts payments"
+    "db:payments": "npx tsx src/utils/db-viewer.ts payments",
+    "cache:cleanup": "npx tsx src/utils/cleanupCache.ts",
+    "test:pdf": "npx tsx src/utils/testPDF.ts",
+    "test:pdf-system": "npx tsx src/utils/testPDFSystem.ts"
   },
   "keywords": [
     "construction",
@@ -30,6 +33,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fontsource/noto-sans-hebrew": "^5.2.6",
     "axios": "^1.11.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",

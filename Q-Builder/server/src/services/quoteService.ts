@@ -4,9 +4,11 @@ import { QuoteItem, QuoteItemCreationAttributes } from '../models/QuoteItem';
 import { Client } from '../models/Client';
 import { CatalogItem } from '../models/CatalogItem';
 import { Project } from '../models/Project';
+import { User } from '../models/User';
 import { AppError } from '../middleware/errorHandler';
 import { generateQuoteNumber } from '../utils/quoteNumber';
 import { sequelize } from '../config/database';
+import { QuoteData } from './pdfService';
 
 export interface QuoteSearchOptions {
   search?: string;
@@ -300,6 +302,10 @@ export class QuoteService {
 
       await transaction.commit();
 
+      // Clear PDF cache since quote was updated
+      const { PDFCacheService } = await import('./pdfCacheService');
+      PDFCacheService.clearQuoteCache(userId, quote.id);
+
       // Return updated quote with related data
       return await this.getQuoteById(userId, quote.id);
     } catch (error) {
@@ -334,6 +340,10 @@ export class QuoteService {
     }
 
     await quote.update({ status });
+
+    // Clear PDF cache since quote status was updated
+    const { PDFCacheService } = await import('./pdfCacheService');
+    PDFCacheService.clearQuoteCache(userId, quote.id);
 
     return await this.getQuoteById(userId, quote.id);
   }
@@ -430,5 +440,84 @@ export class QuoteService {
     );
 
     return affectedCount;
+  }
+
+  /**
+   * Get quote data formatted for PDF generation
+   */
+  static async getQuoteForPDF(userId: number, quoteId: number): Promise<QuoteData> {
+    const quote = await Quote.findOne({
+      where: { id: quoteId, userId },
+      include: [
+        {
+          model: Client,
+          as: 'client',
+          attributes: ['id', 'name', 'contactPerson', 'email', 'phone', 'address']
+        },
+        {
+          model: QuoteItem,
+          as: 'items',
+          attributes: ['id', 'description', 'unit', 'quantity', 'unitPrice', 'lineTotal']
+        },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'businessName', 'phone', 'email', 'address', 'logoUrl', 'vatRate']
+        }
+      ]
+    }) as QuoteWithDetails & { user: User };
+
+    if (!quote) {
+      throw new AppError('Quote not found', 404, 'QUOTE_NOT_FOUND');
+    }
+
+    if (!quote.client) {
+      throw new AppError('Quote client data not found', 404, 'CLIENT_DATA_NOT_FOUND');
+    }
+
+    if (!quote.user) {
+      throw new AppError('Quote user data not found', 404, 'USER_DATA_NOT_FOUND');
+    }
+
+    // Calculate VAT amounts
+    const vatRate = quote.user.vatRate || 0.18; // Default 18% VAT
+    const subtotal = quote.totalAmount;
+    const vatAmount = subtotal * vatRate;
+    const total = subtotal + vatAmount;
+
+    // Format data for PDF generation
+    const pdfData: QuoteData = {
+      quoteNumber: quote.quoteNumber,
+      issueDate: quote.issueDate,
+      expiryDate: quote.expiryDate,
+      business: {
+        name: quote.user.businessName || 'Business Name',
+        address: quote.user.address || '',
+        phone: quote.user.phone || '',
+        email: quote.user.email || '',
+        logoUrl: quote.user.logoUrl
+      },
+      client: {
+        name: quote.client.name,
+        contactPerson: quote.client.contactPerson,
+        phone: quote.client.phone,
+        email: quote.client.email,
+        address: quote.client.address
+      },
+      items: quote.items?.map(item => ({
+        description: item.description,
+        unit: item.unit,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+        lineTotal: item.lineTotal
+      })) || [],
+      subtotal,
+      vatRate,
+      vatAmount,
+      total,
+      terms: quote.terms
+    };
+
+    return pdfData;
   }
 }

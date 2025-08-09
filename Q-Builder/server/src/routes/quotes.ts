@@ -100,6 +100,17 @@ router.post(
 );
 
 /**
+ * @route   GET /api/v1/quotes/:id/pdf
+ * @desc    Generate and download quote PDF
+ * @access  Private
+ */
+router.get(
+  '/:id/pdf',
+  validateRequest(quoteParamsSchema),
+  QuoteController.generateQuotePDF
+);
+
+/**
  * @route   DELETE /api/v1/quotes/:id
  * @desc    Delete a quote
  * @access  Private
