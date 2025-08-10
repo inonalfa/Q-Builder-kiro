@@ -15,6 +15,9 @@ import OAuthCallback from '../../pages/auth/OAuthCallback';
 
 // Protected Pages
 import Dashboard from '../../pages/dashboard/Dashboard';
+import ClientList from '../../pages/clients/ClientList';
+import ClientForm from '../../pages/clients/ClientForm';
+import ClientDetail from '../../pages/clients/ClientDetail';
 
 // Placeholder components for future implementation
 const QuotesPage = () => (
@@ -27,13 +30,6 @@ const QuotesPage = () => (
 const ProjectsPage = () => (
   <div className="text-center py-12">
     <h1 className="text-2xl font-bold text-gray-900 mb-4">פרויקטים</h1>
-    <p className="text-gray-600">עמוד זה יהיה זמין בקרוב</p>
-  </div>
-);
-
-const ClientsPage = () => (
-  <div className="text-center py-12">
-    <h1 className="text-2xl font-bold text-gray-900 mb-4">לקוחות</h1>
     <p className="text-gray-600">עמוד זה יהיה זמין בקרוב</p>
   </div>
 );
@@ -86,10 +82,10 @@ const AppRouter: React.FC = () => {
           <Route path="projects/:id" element={<ProjectsPage />} />
           
           {/* Clients Management */}
-          <Route path="clients" element={<ClientsPage />} />
-          <Route path="clients/new" element={<ClientsPage />} />
-          <Route path="clients/:id" element={<ClientsPage />} />
-          <Route path="clients/:id/edit" element={<ClientsPage />} />
+          <Route path="clients" element={<ClientList />} />
+          <Route path="clients/new" element={<ClientForm />} />
+          <Route path="clients/:id" element={<ClientDetail />} />
+          <Route path="clients/:id/edit" element={<ClientForm />} />
           
           {/* Business Profile */}
           <Route path="profile" element={<ProfilePage />} />
