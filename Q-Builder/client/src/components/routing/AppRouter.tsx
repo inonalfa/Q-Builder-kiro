@@ -21,13 +21,8 @@ import ClientDetail from '../../pages/clients/ClientDetail';
 import QuoteList from '../../pages/quotes/QuoteList';
 import QuoteForm from '../../pages/quotes/QuoteForm';
 import QuoteDetail from '../../pages/quotes/QuoteDetail';
-
-const ProjectsPage = () => (
-  <div className="text-center py-12">
-    <h1 className="text-2xl font-bold text-gray-900 mb-4">פרויקטים</h1>
-    <p className="text-gray-600">עמוד זה יהיה זמין בקרוב</p>
-  </div>
-);
+import ProjectList from '../../pages/projects/ProjectList';
+import ProjectDetail from '../../pages/projects/ProjectDetail';
 
 const ProfilePage = () => (
   <div className="text-center py-12">
@@ -73,8 +68,8 @@ const AppRouter: React.FC = () => {
           <Route path="quotes/:id/edit" element={<QuoteForm />} />
           
           {/* Projects Management */}
-          <Route path="projects" element={<ProjectsPage />} />
-          <Route path="projects/:id" element={<ProjectsPage />} />
+          <Route path="projects" element={<ProjectList />} />
+          <Route path="projects/:id" element={<ProjectDetail />} />
           
           {/* Clients Management */}
           <Route path="clients" element={<ClientList />} />
