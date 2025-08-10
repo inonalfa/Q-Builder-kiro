@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useClientStore } from '../../stores/clientStore';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import usePageTitle from '../../hooks/usePageTitle';
 import { 
   Button, 
   Card, 

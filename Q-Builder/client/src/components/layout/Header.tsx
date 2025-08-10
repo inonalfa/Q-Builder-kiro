@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
-  const { toggleSidebar, addNotification } = useUIStore();
+  const { sidebarOpen, toggleSidebar, addNotification } = useUIStore();
 
   const handleLogout = () => {
     logout();
@@ -23,31 +23,41 @@ const Header: React.FC = () => {
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Right side - Logo and menu toggle */}
+          {/* Left side - Menu toggle (all devices) */}
           <div className="flex items-center">
             <button
               onClick={toggleSidebar}
-              className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 lg:hidden"
+              className={`p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors ${
+                sidebarOpen ? 'text-indigo-600 bg-indigo-50' : 'text-gray-400 hover:text-gray-500'
+              }`}
+              title={sidebarOpen ? 'סגור תפריט' : 'פתח תפריט'}
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              {sidebarOpen ? (
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
             </button>
-            
-            <div className="flex items-center mr-4">
-              <div className="flex-shrink-0">
-                <div className="h-8 w-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">Q</span>
-                </div>
+          </div>
+
+          {/* Center - Logo */}
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <div className="h-8 w-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">Q</span>
               </div>
-              <div className="mr-3">
-                <h1 className="text-xl font-bold text-gray-900">Q-Builder</h1>
-                <p className="text-xs text-gray-500">מערכת הצעות מחיר</p>
-              </div>
+            </div>
+            <div className="mr-3">
+              <h1 className="text-xl font-bold text-gray-900">Q-Builder</h1>
+              <p className="text-xs text-gray-500">מערכת הצעות מחיר</p>
             </div>
           </div>
 
-          {/* Left side - User menu */}
+          {/* Right side - User menu */}
           <div className="flex items-center">
             {/* Notifications */}
             <button className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-full">

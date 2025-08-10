@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import usePageTitle from '../../hooks/usePageTitle';
 
 const QuoteForm: React.FC = () => {
   usePageTitle('הצעת מחיר חדשה');

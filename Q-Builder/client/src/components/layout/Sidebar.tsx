@@ -97,34 +97,9 @@ const Sidebar: React.FC = () => {
 
   return (
     <>
-      {/* Mobile sidebar overlay */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        >
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
-        </div>
-      )}
-
       {/* Sidebar */}
-      <div className={`
-        fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0
-        ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}
-      `}>
+      <div className="w-64 bg-white border-r border-gray-200 flex-shrink-0 shadow-lg">
         <div className="flex flex-col h-full">
-          {/* Sidebar header */}
-          <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 lg:hidden">
-            <h2 className="text-lg font-semibold text-gray-900">תפריט ניווט</h2>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
 
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-2">

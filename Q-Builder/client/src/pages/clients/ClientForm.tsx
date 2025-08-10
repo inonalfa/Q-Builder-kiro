@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useClientStore } from '../../stores/clientStore';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import usePageTitle from '../../hooks/usePageTitle';
 import { 
   Button, 
   Card, 

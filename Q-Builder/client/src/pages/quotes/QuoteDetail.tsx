@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import usePageTitle from '../../hooks/usePageTitle';
 
 const QuoteDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
