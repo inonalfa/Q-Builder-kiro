@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useUIStore } from '../../stores/uiStore';
-import usePageTitle from '../../hooks/usePageTitle';
+import { usePageTitle } from '../../hooks';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Breadcrumb from '../navigation/Breadcrumb';

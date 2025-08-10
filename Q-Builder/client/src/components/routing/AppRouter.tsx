@@ -18,14 +18,9 @@ import Dashboard from '../../pages/dashboard/Dashboard';
 import ClientList from '../../pages/clients/ClientList';
 import ClientForm from '../../pages/clients/ClientForm';
 import ClientDetail from '../../pages/clients/ClientDetail';
-
-// Placeholder components for future implementation
-const QuotesPage = () => (
-  <div className="text-center py-12">
-    <h1 className="text-2xl font-bold text-gray-900 mb-4">הצעות מחיר</h1>
-    <p className="text-gray-600">עמוד זה יהיה זמין בקרוב</p>
-  </div>
-);
+import QuoteList from '../../pages/quotes/QuoteList';
+import QuoteForm from '../../pages/quotes/QuoteForm';
+import QuoteDetail from '../../pages/quotes/QuoteDetail';
 
 const ProjectsPage = () => (
   <div className="text-center py-12">
@@ -72,10 +67,10 @@ const AppRouter: React.FC = () => {
           <Route path="dashboard" element={<Dashboard />} />
           
           {/* Quotes Management */}
-          <Route path="quotes" element={<QuotesPage />} />
-          <Route path="quotes/new" element={<QuotesPage />} />
-          <Route path="quotes/:id" element={<QuotesPage />} />
-          <Route path="quotes/:id/edit" element={<QuotesPage />} />
+          <Route path="quotes" element={<QuoteList />} />
+          <Route path="quotes/new" element={<QuoteForm />} />
+          <Route path="quotes/:id" element={<QuoteDetail />} />
+          <Route path="quotes/:id/edit" element={<QuoteForm />} />
           
           {/* Projects Management */}
           <Route path="projects" element={<ProjectsPage />} />
