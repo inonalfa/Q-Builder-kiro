@@ -74,7 +74,7 @@ const OAuthCallback: React.FC = () => {
         
         // Handle successful login
         if (response.success && response.data) {
-          const { user, token } = response.data;
+          const { user, token } = response.data as { user: any; token: string };
           
           // Store user data and token
           login(user, token);

@@ -59,7 +59,7 @@ const Login: React.FC = () => {
             const response = await apiService.login(email, password);
             
             if (response.success && response.data) {
-                const { user, token } = response.data;
+                const { user, token } = response.data as { user: any; token: string };
                 
                 // Login user
                 login(user, token);

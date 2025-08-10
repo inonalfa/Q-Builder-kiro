@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import { useUIStore } from '../../stores/uiStore';
 import { formatCurrency } from '../../utils/hebrew';
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const { user } = useAuthStore();
   const { addNotification } = useUIStore();
 
@@ -132,12 +134,31 @@ const Dashboard: React.FC = () => {
     }
   ];
 
-  const handleQuickAction = (_actionId: string) => {
-    addNotification({
-      type: 'info',
-      message: 'פונקציה זו תהיה זמינה בקרוב',
-      duration: 3000
-    });
+  const handleQuickAction = (actionId: string) => {
+    switch (actionId) {
+      case 'new-quote':
+        navigate('/quotes/new');
+        break;
+      case 'add-client':
+        navigate('/clients/new');
+        break;
+      case 'view-projects':
+        navigate('/projects');
+        break;
+      case 'add-payment':
+        addNotification({
+          type: 'info',
+          message: 'רישום תשלום יהיה זמין בקרוב',
+          duration: 3000
+        });
+        break;
+      default:
+        addNotification({
+          type: 'info',
+          message: 'פונקציה זו תהיה זמינה בקרוב',
+          duration: 3000
+        });
+    }
   };
 
   return (

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import { useUIStore } from '../../stores/uiStore';
 
 const Header: React.FC = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const { toggleSidebar, addNotification } = useUIStore();
 
@@ -14,6 +16,7 @@ const Header: React.FC = () => {
       message: 'התנתקת בהצלחה מהמערכת',
       duration: 3000
     });
+    navigate('/login');
   };
 
   return (
@@ -80,7 +83,7 @@ const Header: React.FC = () => {
                     <button
                       onClick={() => {
                         setUserMenuOpen(false);
-                        addNotification({ type: 'info', message: 'פרופיל עסקי יהיה זמין בקרוב', duration: 3000 });
+                        navigate('/profile');
                       }}
                       className="block w-full text-right px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
