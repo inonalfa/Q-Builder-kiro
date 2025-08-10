@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuoteStore } from '../../stores/quoteStore';
-import { usePageTitle } from '../../hooks/usePageTitle';
+import usePageTitle from '../../hooks/usePageTitle';
 import QuoteStatusSummary from '../../components/quotes/QuoteStatusSummary';
 import type { QuoteStatus } from '../../types';
 
@@ -62,7 +62,7 @@ const StatusBadge: React.FC<{ status: QuoteStatus }> = ({ status }) => {
   };
 
   const config = getStatusConfig(status);
-  
+
   return (
     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${config.className}`}>
       {config.label}
@@ -99,7 +99,7 @@ const QuoteCard: React.FC<{ quote: any }> = ({ quote }) => {
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 mb-1">
-            <Link 
+            <Link
               to={`/quotes/${quote.id}`}
               className="hover:text-blue-600 transition-colors"
             >
@@ -153,9 +153,9 @@ const QuoteCard: React.FC<{ quote: any }> = ({ quote }) => {
 };
 
 // Filters component
-const QuoteFilters: React.FC<{ 
-  onRefresh: () => void; 
-  loading: boolean; 
+const QuoteFilters: React.FC<{
+  onRefresh: () => void;
+  loading: boolean;
 }> = ({ onRefresh, loading }) => {
   const { filters, setFilters, clearFilters, clients } = useQuoteStore();
   const [showFilters, setShowFilters] = useState(false);
@@ -176,130 +176,130 @@ const QuoteFilters: React.FC<{
     <div className="space-y-4">
       {/* Status Summary */}
       <QuoteStatusSummary onStatusFilter={handleStatusFilter} />
-      
+
       <div className="bg-white rounded-lg border border-gray-200 p-4">
         <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-4">
-          {/* Search */}
-          <div className="relative">
-            <SearchIcon />
-            <input
-              type="text"
-              placeholder="חיפוש הצעות מחיר..."
-              value={filters.search || ''}
-              onChange={(e) => setFilters({ search: e.target.value })}
-              className="pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+          <div className="flex items-center gap-4">
+            {/* Search */}
+            <div className="relative">
               <SearchIcon />
+              <input
+                type="text"
+                placeholder="חיפוש הצעות מחיר..."
+                value={filters.search || ''}
+                onChange={(e) => setFilters({ search: e.target.value })}
+                className="pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <SearchIcon />
+              </div>
+            </div>
+
+            {/* Filter toggle */}
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              <FilterIcon />
+              <span>סינון</span>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {Object.keys(filters).length > 0 && (
+              <button
+                onClick={clearFilters}
+                className="text-sm text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                נקה סינון
+              </button>
+            )}
+            <button
+              onClick={onRefresh}
+              disabled={loading}
+              className="flex items-center gap-2 px-3 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+            >
+              <RefreshIcon />
+              <span>רענן</span>
+            </button>
+            <Link
+              to="/quotes/new"
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <PlusIcon />
+              <span>הצעת מחיר חדשה</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Expanded filters */}
+        {showFilters && (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
+            {/* Status filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                סטטוס
+              </label>
+              <select
+                value={filters.status || ''}
+                onChange={(e) => setFilters({ status: e.target.value as QuoteStatus || undefined })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">כל הסטטוסים</option>
+                {statusOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Client filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                לקוח
+              </label>
+              <select
+                value={filters.clientId || ''}
+                onChange={(e) => setFilters({ clientId: e.target.value ? parseInt(e.target.value) : undefined })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">כל הלקוחות</option>
+                {clients.map(client => (
+                  <option key={client.id} value={client.id}>
+                    {client.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Date from */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                מתאריך
+              </label>
+              <input
+                type="date"
+                value={filters.dateFrom || ''}
+                onChange={(e) => setFilters({ dateFrom: e.target.value || undefined })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Date to */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                עד תאריך
+              </label>
+              <input
+                type="date"
+                value={filters.dateTo || ''}
+                onChange={(e) => setFilters({ dateTo: e.target.value || undefined })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
           </div>
-
-          {/* Filter toggle */}
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
-          >
-            <FilterIcon />
-            <span>סינון</span>
-          </button>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {Object.keys(filters).length > 0 && (
-            <button
-              onClick={clearFilters}
-              className="text-sm text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              נקה סינון
-            </button>
-          )}
-          <button
-            onClick={onRefresh}
-            disabled={loading}
-            className="flex items-center gap-2 px-3 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
-          >
-            <RefreshIcon />
-            <span>רענן</span>
-          </button>
-          <Link
-            to="/quotes/new"
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <PlusIcon />
-            <span>הצעת מחיר חדשה</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Expanded filters */}
-      {showFilters && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
-          {/* Status filter */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              סטטוס
-            </label>
-            <select
-              value={filters.status || ''}
-              onChange={(e) => setFilters({ status: e.target.value as QuoteStatus || undefined })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">כל הסטטוסים</option>
-              {statusOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Client filter */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              לקוח
-            </label>
-            <select
-              value={filters.clientId || ''}
-              onChange={(e) => setFilters({ clientId: e.target.value ? parseInt(e.target.value) : undefined })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">כל הלקוחות</option>
-              {clients.map(client => (
-                <option key={client.id} value={client.id}>
-                  {client.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Date from */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              מתאריך
-            </label>
-            <input
-              type="date"
-              value={filters.dateFrom || ''}
-              onChange={(e) => setFilters({ dateFrom: e.target.value || undefined })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-
-          {/* Date to */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              עד תאריך
-            </label>
-            <input
-              type="date"
-              value={filters.dateTo || ''}
-              onChange={(e) => setFilters({ dateTo: e.target.value || undefined })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );
@@ -308,14 +308,14 @@ const QuoteFilters: React.FC<{
 // Main component
 const QuoteList: React.FC = () => {
   usePageTitle('הצעות מחיר');
-  
-  const { 
-    quotes, 
-    loading, 
-    error, 
-    fetchQuotes, 
-    fetchClients, 
-    getFilteredQuotes 
+
+  const {
+    quotes,
+    loading,
+    error,
+    fetchQuotes,
+    fetchClients,
+    getFilteredQuotes
   } = useQuoteStore();
 
   const filteredQuotes = getFilteredQuotes();

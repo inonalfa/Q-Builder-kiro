@@ -52,10 +52,15 @@ export const useQuoteStore = create<QuoteStore>()(
       fetchQuotes: async () => {
         set({ loading: true, error: null });
         try {
-          const response = await apiService.get<Quote[]>('/quotes');
+          const response = await apiService.get('/quotes');
           if (response.success && response.data) {
             // Handle both array and paginated response formats
-            const quotes = Array.isArray(response.data) ? response.data : response.data.quotes || [];
+            let quotes: Quote[] = [];
+            if (Array.isArray(response.data)) {
+              quotes = response.data;
+            } else if (response.data && typeof response.data === 'object' && 'quotes' in response.data) {
+              quotes = (response.data as { quotes: Quote[] }).quotes || [];
+            }
             set({ quotes, loading: false });
           } else {
             throw new Error(response.error?.message || 'Failed to fetch quotes');

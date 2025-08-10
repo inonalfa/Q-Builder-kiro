@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const usePageTitle = () => {
+const usePageTitle = (customTitle?: string) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -49,11 +49,11 @@ const usePageTitle = () => {
       return 'Q-Builder';
     };
 
-    const pageTitle = getPageTitle(location.pathname);
+    const pageTitle = customTitle || getPageTitle(location.pathname);
     const fullTitle = pageTitle === 'Q-Builder' ? 'Q-Builder' : `${pageTitle} | Q-Builder`;
     
     document.title = fullTitle;
-  }, [location.pathname]);
+  }, [location.pathname, customTitle]);
 };
 
 export default usePageTitle;
