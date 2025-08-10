@@ -56,7 +56,7 @@ export interface Quote {
 export type QuoteStatus = 'draft' | 'sent' | 'accepted' | 'rejected' | 'expired';
 
 export interface QuoteItem {
-  id: number;
+  id?: number;
   quoteId: number;
   catalogItemId?: number;
   description: string;

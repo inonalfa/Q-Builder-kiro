@@ -268,6 +268,8 @@
 
 
 
+
+
   - [x] 9.1 Create quote list and filtering interface
 
 
@@ -277,7 +279,10 @@
     - Add quote cards showing key information and actions
     - _Requirements: 1.1, 10.1, 10.2_
 
-  - [ ] 9.2 Implement quote creation and editing forms
+  - [x] 9.2 Implement quote creation and editing forms
+
+
+
     - Create multi-step quote form with client selection
     - Build catalog item selector with search and filtering
     - Implement line item management with add/remove/edit capabilities
@@ -285,7 +290,10 @@
     - Include terms and conditions text area
     - _Requirements: 1.1, 1.2, 1.3, 6.2, 6.3, 6.4_
 
-  - [ ] 9.3 Build quote viewing and PDF generation
+  - [-] 9.3 Build quote viewing and PDF generation
+
+
+
     - Create quote detail view with all information display
     - Implement PDF preview and download functionality
     - Add quote status management buttons (send, accept, reject)
