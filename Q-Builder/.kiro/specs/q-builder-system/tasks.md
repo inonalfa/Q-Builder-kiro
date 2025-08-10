@@ -290,7 +290,10 @@
     - Include terms and conditions text area
     - _Requirements: 1.1, 1.2, 1.3, 6.2, 6.3, 6.4_
 
-  - [-] 9.3 Build quote viewing and PDF generation
+  - [x] 9.3 Build quote viewing and PDF generation
+
+
+
 
 
 
