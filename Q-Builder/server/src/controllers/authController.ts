@@ -3,6 +3,9 @@ import { AuthService } from '../services/authService';
 import { AppError } from '../middleware/errorHandler';
 import { GoogleOAuthService } from '../services/googleOAuthService';
 import { AppleOAuthService } from '../services/appleOAuthService';
+import { deleteOldLogo } from '../middleware/upload';
+import { User } from '../models/User';
+import path from 'path';
 
 export class AuthController {
   static async register(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -177,6 +180,78 @@ export class AuthController {
       res.json({
         success: true,
         data: { authUrl }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async uploadLogo(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (!req.userId) {
+        throw new AppError('User not authenticated', 401, 'NOT_AUTHENTICATED');
+      }
+
+      if (!req.file) {
+        throw new AppError('No file uploaded', 400, 'NO_FILE');
+      }
+
+      // Get current user to check for existing logo
+      const user = await User.findByPk(req.userId);
+      if (!user) {
+        throw new AppError('User not found', 404, 'USER_NOT_FOUND');
+      }
+
+      // Delete old logo if exists
+      if (user.logoUrl) {
+        deleteOldLogo(user.logoUrl);
+      }
+
+      // Generate logo URL
+      const logoUrl = `/uploads/logos/${req.file.filename}`;
+
+      // Update user with new logo URL
+      await user.update({ logoUrl });
+
+      res.json({
+        success: true,
+        message: 'Logo uploaded successfully',
+        data: { logoUrl }
+      });
+    } catch (error) {
+      // Clean up uploaded file if there was an error
+      if (req.file) {
+        try {
+          const fs = require('fs');
+          fs.unlinkSync(req.file.path);
+        } catch (cleanupError) {
+          console.error('Error cleaning up uploaded file:', cleanupError);
+        }
+      }
+      next(error);
+    }
+  }
+
+  static async deleteLogo(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (!req.userId) {
+        throw new AppError('User not authenticated', 401, 'NOT_AUTHENTICATED');
+      }
+
+      const user = await User.findByPk(req.userId);
+      if (!user) {
+        throw new AppError('User not found', 404, 'USER_NOT_FOUND');
+      }
+
+      // Delete logo file if exists
+      if (user.logoUrl) {
+        deleteOldLogo(user.logoUrl);
+        await user.update({ logoUrl: null });
+      }
+
+      res.json({
+        success: true,
+        message: 'Logo deleted successfully'
       });
     } catch (error) {
       next(error);

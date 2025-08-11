@@ -23,13 +23,7 @@ import QuoteForm from '../../pages/quotes/QuoteForm';
 import QuoteDetail from '../../pages/quotes/QuoteDetail';
 import ProjectList from '../../pages/projects/ProjectList';
 import ProjectDetail from '../../pages/projects/ProjectDetail';
-
-const ProfilePage = () => (
-  <div className="text-center py-12">
-    <h1 className="text-2xl font-bold text-gray-900 mb-4">פרופיל עסקי</h1>
-    <p className="text-gray-600">עמוד זה יהיה זמין בקרוב</p>
-  </div>
-);
+import { BusinessProfile } from '../../pages/profile';
 
 const AppRouter: React.FC = () => {
   const { isAuthenticated } = useAuthStore();
@@ -78,7 +72,7 @@ const AppRouter: React.FC = () => {
           <Route path="clients/:id/edit" element={<ClientForm />} />
           
           {/* Business Profile */}
-          <Route path="profile" element={<ProfilePage />} />
+          <Route path="profile" element={<BusinessProfile />} />
         </Route>
 
         {/* Fallback Route */}

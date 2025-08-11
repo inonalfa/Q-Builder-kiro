@@ -3,6 +3,7 @@ import { AuthController } from '../controllers/authController';
 import { validateRequest } from '../middleware/validation';
 import { authenticateToken } from '../middleware/auth';
 import { authRateLimitMiddleware } from '../middleware/rateLimiter';
+import { uploadLogo, handleUploadError } from '../middleware/upload';
 import { registerSchema, loginSchema, updateProfileSchema, googleOAuthSchema, googleAuthUrlSchema, appleOAuthSchema, appleAuthUrlSchema } from '../validation/auth';
 
 const router = Router();
@@ -65,6 +66,19 @@ router.post('/apple/callback',
   authRateLimitMiddleware,
   validateRequest(appleOAuthSchema),
   AuthController.appleOAuth
+);
+
+// Logo upload routes
+router.post('/upload-logo',
+  authenticateToken,
+  uploadLogo,
+  handleUploadError,
+  AuthController.uploadLogo
+);
+
+router.delete('/logo',
+  authenticateToken,
+  AuthController.deleteLogo
 );
 
 export default router;
